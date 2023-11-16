@@ -1,4 +1,5 @@
 import os
+import logging
 
 from flask import Flask
 from flask_restful import Api
@@ -9,6 +10,9 @@ from flasgger import Swagger
 
 from .resource.health import Health
 from .resource.status import Status
+from .resource.test import CountTest, ErrorTest, CeleryTest, CeleryStatus
+
+logging.basicConfig(level=logging.DEBUG)
 
 broker_url = os.environ.get("CELERY_BROKER_URL", "amqp://guest:guest@127.0.0.1:5672")
 backend_url = os.environ.get("CELERY_RESULT_BACKEND", "db+sqlite:///results.sqlite")
@@ -26,6 +30,7 @@ app.config["SWAGGER"] = dict(
     description="API for the OHDSI project",
     version="0.1.0",
     openapi="3.0.2",
+    uiversion=3,
 )
 
 swagger = Swagger(app)
@@ -49,6 +54,43 @@ api.add_resource(
 api.add_resource(
     Status,
     "/status",
+    resource_class_kwargs={
+        "api": api,
+        "celery": celery_app,
+    },
+)
+
+api.add_resource(
+    CountTest,
+    "/count",
+    resource_class_kwargs={
+        "api": api,
+        "celery": celery_app,
+    },
+)
+
+api.add_resource(
+    ErrorTest,
+    "/error",
+    resource_class_kwargs={
+        "api": api,
+        "celery": celery_app,
+    },
+)
+
+
+api.add_resource(
+    CeleryStatus,
+    "/result/<string:id_>",
+    resource_class_kwargs={
+        "api": api,
+        "celery": celery_app,
+    },
+)
+
+api.add_resource(
+    CeleryTest,
+    "/celery",
     resource_class_kwargs={
         "api": api,
         "celery": celery_app,

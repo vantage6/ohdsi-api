@@ -46,6 +46,19 @@ contents into a file called ``docker-compose.yml``:
             - 15672:15672
             container_name: rabbitmq
 
+        # PostgreSQL for celery
+        db:
+            image: postgres:9.6
+            ports:
+            - 5454:5432
+            container_name: postgres
+            environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=Celery@Postgr3s!
+            - POSTGRES_DB=celery
+            volumes:
+            - ./data/postgres:/var/lib/postgresql/data
+
         celery-worker:
             build: .
             image: harbor2.vantage6.ai/infrastructure/ohdsi-api:latest
@@ -63,6 +76,9 @@ OMOP data source:
 
 .. code-block:: sh
     :caption: .connection-details.env
+
+    CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672/
+    CELERY_RESULT_BACKEND=db+postgresql://postgres:Celery@Postgr3s!@db/celery
 
     OMOP_HOST=omop-data-source
     OMOP_PORT=5432

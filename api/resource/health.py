@@ -1,25 +1,12 @@
-import os
-
 from http import HTTPStatus
 from logging import getLogger
 
-if not os.environ.get("IGNORE_R_IMPORTS", False):
-    from ohdsi.database_connector import create_connection_details, connect
-
-from . import ServiceResource
-
-
-dbms = os.environ.get("OMOP_DBMS")
-server = os.environ.get("OMOP_SERVER")
-database = os.environ.get("OMOP_DATABASE")
-user = os.environ.get("OMOP_USER")
-password = os.environ.get("OMOP_PASSWORD")
-port = os.environ.get("OMOP_PORT")
+from . import OHDSIResource
 
 log = getLogger(__name__)
 
 
-class Health(ServiceResource):
+class Health(OHDSIResource):
     def get(self):
         """
         Check the health of the API.
@@ -41,14 +28,7 @@ class Health(ServiceResource):
         # Check database connection
         database_status = "ok"
         try:
-            connection_details = create_connection_details(
-                dbms,
-                server=f"{server}/{database}",
-                user=user,
-                password=password,
-                port=port,
-            )
-            connect(connection_details)
+            self.connect()
         except Exception as e:
             log.error(e)
             database_status = "Database is not available"
