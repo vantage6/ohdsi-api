@@ -3,17 +3,18 @@ import os
 from http import HTTPStatus
 from logging import getLogger
 
-from ohdsi.database_connector import create_connection_details, connect
+if not os.environ.get("IGNORE_R_IMPORTS", False):
+    from ohdsi.database_connector import create_connection_details, connect
 
 from . import ServiceResource
 
 
-dbms = os.environ["OMOP_DBMS"]
-server = os.environ["OMOP_SERVER"]
-database = os.environ["OMOP_DATABASE"]
-user = os.environ["OMOP_USER"]
-password = os.environ["OMOP_PASSWORD"]
-port = os.environ["OMOP_PORT"]
+dbms = os.environ.get("OMOP_DBMS")
+server = os.environ.get("OMOP_SERVER")
+database = os.environ.get("OMOP_DATABASE")
+user = os.environ.get("OMOP_USER")
+password = os.environ.get("OMOP_PASSWORD")
+port = os.environ.get("OMOP_PORT")
 
 log = getLogger(__name__)
 

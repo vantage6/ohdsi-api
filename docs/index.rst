@@ -10,12 +10,14 @@ OHDSI API
     :maxdepth: 2
 
     user/quickstart
+    user/endpoints
 
 .. toctree::
    :maxdepth: 2
    :caption: Development
 
    development/documentation
+   development/release_notes
 
 
 
