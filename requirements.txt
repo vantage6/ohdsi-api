@@ -11,4 +11,5 @@ ohdsi-feature-extraction
 ohdsi-common
 flasgger==0.9.7.1
 black
-
+furo==2023.9.10
+sphinxcontrib-openapi

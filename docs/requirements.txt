@@ -1,4 +1,0 @@
-furo==2023.9.10
-flask-restful
-flasgger
-sphinxcontrib-openapi
