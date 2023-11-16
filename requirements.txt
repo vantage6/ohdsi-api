@@ -1,0 +1,14 @@
+gunicorn==21.2.0
+flask-restful
+Flask-SQLAlchemy
+celery
+watchdog[watchmedo]
+ohdsi-circe
+ohdsi-cohort-generator
+ohdsi-database-connector
+ohdsi-sqlrender
+ohdsi-feature-extraction
+ohdsi-common
+flasgger==0.9.7.1
+black
+

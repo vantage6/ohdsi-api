@@ -1,0 +1,19 @@
+services:
+
+  # OHDSI API
+  ohdsi-api:
+    command: ["gunicorn", "-b", "0.0.0.0", "-w", "1", "--reload", "api:app"]
+
+  celery-worker:
+    command: |
+      watchmedo auto-restart
+      --patterns='*.py'
+      --directory=/app
+      --recursive
+      --signal SIGTERM
+      --debug-force-polling
+      --verbose
+      --kill-after=2
+      -- celery -A api.celery_app --workdir /app worker -P solo
+    # -l DEBUG
+
