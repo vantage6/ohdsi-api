@@ -1,0 +1,45 @@
+{
+    "info": {
+        "version": "0.1.0",
+        "title": "OHDSI API",
+        "description": "API for the OHDSI project",
+        "termsOfService": "/tos"
+    },
+    "paths": {
+        "/health": {
+            "get": {
+                "summary": "Check the health of the API.",
+                "description": "<br/>This endpoint checks the health of the following services:<br/>- API<br/>- Database<br/>- Celery<br/>",
+                "responses": {
+                    "200": {
+                        "description": "All services are healthy"
+                    },
+                    "403": {
+                        "description": "At least one service is not healthy"
+                    }
+                },
+                "tags": [
+                    "Monitor"
+                ]
+            }
+        },
+        "/status": {
+            "get": {
+                "summary": "Check the status of the Celery workers.",
+                "description": "<br/>This endpoint checks the status of the Celery workers.<br/>",
+                "responses": {
+                    "200": {
+                        "description": "Detailed status of the Celery workers"
+                    }
+                },
+                "tags": [
+                    "Monitor"
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {}
+    },
+    "openapi": "3.0.2"
+}

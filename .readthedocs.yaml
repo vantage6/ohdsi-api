@@ -13,9 +13,9 @@ build:
     # nodejs: "20"
     # rust: "1.70"
     # golang: "1.20"
-  jobs:
-    pre_build:
-      - flask --app api generate-api-schema -f ./docs/user/api-schema.json
+  # jobs:
+  #   pre_build:
+  #     - flask --app api generate-api-schema -f ./docs/user/api-schema.json
 
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
@@ -35,4 +35,4 @@ sphinx:
 # See https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
 python:
   install:
-    - requirements: requirements.txt
+    - requirements: docs/requirements.txt
