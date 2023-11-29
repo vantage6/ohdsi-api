@@ -4,9 +4,13 @@ services:
   ohdsi-api:
     build: .
     command: ["gunicorn", "-b", "0.0.0.0", "-w", "1", "--reload", "api:app"]
+    volumes:
+      - .:/app
 
   celery-worker:
     build: .
+    volumes:
+      - .:/app
     command: |
       watchmedo auto-restart
       --patterns='*.py'
