@@ -1,0 +1,24 @@
+name: CI
+
+on:
+    tags:
+        - version/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Extract version
+      run: echo "VERSION=$(echo ${GITHUB_REF#refs/tags/version/})" >> $GITHUB_ENV
+
+    - uses: actions/checkout@v3
+
+    - name: Set version
+      run: make set-version VERSION=$VERSION
+
+    - name: Run make build
+      run: make build
+
+    - name: Run make push
+      run: make push
