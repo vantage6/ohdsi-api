@@ -57,7 +57,7 @@ class ErrorTest(OHDSIResource):
         ---
         responses:
             200:
-            description: The number of patients in the database
+                description: The number of patients in the database
 
         tags: [Test]
         """
@@ -86,6 +86,13 @@ class ErrorTest(OHDSIResource):
 # TODO make regular resource
 class CeleryTest(OHDSIResource):
     def get(self):
+        """
+        Test Celery.
+        ---
+        responses:
+            200:
+                description: Task started
+        """
         try:
             task: AsyncResult = count.delay()
         except Exception as e:
@@ -98,6 +105,13 @@ class CeleryTest(OHDSIResource):
 # TODO make regular resource
 class CeleryStatus(OHDSIResource):
     def get(self, id_):
+        """
+        Test Celery.
+        ---
+        responses:
+            200:
+                description: The number of patients in the database
+        """
         # id_ = "b06a84c8-114b-42f1-95a0-a209eb431163"
         result = AsyncResult(id_)
 

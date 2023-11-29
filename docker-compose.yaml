@@ -20,7 +20,7 @@ services:
       - 15672:15672
     container_name: rabbitmq
 
-  # PostgreSQL
+  # PostgreSQL for celery
   db:
     image: postgres:9.6
     ports:
