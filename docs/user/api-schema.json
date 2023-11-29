@@ -6,6 +6,20 @@
         "termsOfService": "/tos"
     },
     "paths": {
+        "/version": {
+            "get": {
+                "summary": "Reports the version of the API.",
+                "description": "<br/>",
+                "responses": {
+                    "200": {
+                        "description": "version of the server"
+                    }
+                },
+                "tags": [
+                    "Monitor"
+                ]
+            }
+        },
         "/health": {
             "get": {
                 "summary": "Check the health of the API.",
@@ -35,6 +49,55 @@
                 "tags": [
                     "Monitor"
                 ]
+            }
+        },
+        "/count": {
+            "get": {
+                "summary": "Count the number of persons in the database.",
+                "responses": {
+                    "200": {
+                        "description": "The number of patients in the database"
+                    },
+                    "500": {
+                        "description": "Something went wrong"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            }
+        },
+        "/error": {
+            "get": {
+                "summary": "Produce an error on the query, and return something useful to the user.",
+                "responses": {
+                    "200": {
+                        "description": "The number of patients in the database"
+                    }
+                },
+                "tags": [
+                    "Test"
+                ]
+            }
+        },
+        "/result/{id_}": {
+            "get": {
+                "summary": "Test Celery.",
+                "responses": {
+                    "200": {
+                        "description": "The number of patients in the database"
+                    }
+                }
+            }
+        },
+        "/celery": {
+            "get": {
+                "summary": "Test Celery.",
+                "responses": {
+                    "200": {
+                        "description": "Task started"
+                    }
+                }
             }
         }
     },
