@@ -8,6 +8,7 @@ from flasgger import Swagger
 
 # from .old import FeatureExtraction, FeatureExtractionJob
 
+from .resource.version import Version
 from .resource.health import Health
 from .resource.status import Status
 from .resource.test import CountTest, ErrorTest, CeleryTest, CeleryStatus
@@ -40,6 +41,16 @@ api = Api(app)
 celery_app = Celery(app.name)
 celery_app.config_from_object(app.config["CELERY"])
 celery_app.set_default()
+
+
+api.add_resource(
+    Version,
+    "/version",
+    resource_class_kwargs={
+        "api": api,
+        "celery": celery_app,
+    },
+)
 
 
 api.add_resource(
