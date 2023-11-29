@@ -60,7 +60,6 @@ contents into a file called ``docker-compose.yml``:
             - ./data/postgres:/var/lib/postgresql/data
 
         celery-worker:
-            build: .
             image: harbor2.vantage6.ai/infrastructure/ohdsi-api:latest
             container_name: celery-worker
             command: celery -A api.celery_app worker -l DEBUG -P solo

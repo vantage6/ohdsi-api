@@ -2,9 +2,11 @@ services:
 
   # OHDSI API
   ohdsi-api:
+    build: .
     command: ["gunicorn", "-b", "0.0.0.0", "-w", "1", "--reload", "api:app"]
 
   celery-worker:
+    build: .
     command: |
       watchmedo auto-restart
       --patterns='*.py'
