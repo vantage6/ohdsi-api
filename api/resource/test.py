@@ -17,7 +17,10 @@ log = getLogger(__name__)
 class CountTest(OHDSIResource):
     def get(self):
         """
-        Count the number of persons in the database.
+        Count the number of records in the person table.
+
+        This endpoint counts the number of records in the person table. It used a
+        direct SQL query to the database (So not using the celery workers).
         ---
         responses:
           200:
@@ -53,11 +56,15 @@ class CountTest(OHDSIResource):
 class ErrorTest(OHDSIResource):
     def get(self):
         """
-        Produce an error on the query, and return something useful to the user.
+        Produce an error on the query.
+
+        This endpoint is used to test the error handling of the API.
         ---
         responses:
+            500:
+                description: As expected the query failed
             200:
-                description: The number of patients in the database
+                description: If you get this the test failed.. by succeeding
 
         tags: [Test]
         """
@@ -65,7 +72,7 @@ class ErrorTest(OHDSIResource):
         connection = self.connect()
         log.info("Going to send a broken query to the database")
         try:
-            count = query_sql(connection, "SELECT COUNT(*) FROM non_existing_table")
+            query_sql(connection, "SELECT COUNT(*) FROM non_existing_table")
         except Exception as e:
             log.exception(e)
             # read /app/errorReportSql.txt and return it
@@ -74,24 +81,26 @@ class ErrorTest(OHDSIResource):
 
             return {"error": str(error_report)}, HTTPStatus.INTERNAL_SERVER_ERROR
 
-        log.info("Counted the number of persons in the database")
-
-        count = RS4Extended.from_RS4(count)
-        count = convert_from_r(count.extract("COUNT"))
-        log.info("Converted from R object")
-
-        return {"count": count}, HTTPStatus.OK
+        return {"msg": "If you get this the test failed.. by succeeding"}, HTTPStatus.OK
 
 
 # TODO make regular resource
 class CeleryTest(OHDSIResource):
     def get(self):
         """
-        Test Celery.
+        Create a count task.
+
+        This endpoint creates a count task and returns the task id. This endpoint
+        uses the celery workers. The result can be retrieved with the CeleryStatus
+        endpoint.
         ---
         responses:
             200:
                 description: Task started
+            503:
+                description: Celery is not available, check the health endpoint
+
+        tags: [Test]
         """
         try:
             task: AsyncResult = count.delay()
@@ -106,13 +115,19 @@ class CeleryTest(OHDSIResource):
 class CeleryStatus(OHDSIResource):
     def get(self, id_):
         """
-        Test Celery.
+        Retrieve the status and/or result of a task.
+
+        This endpoint retrieves the status and/or result of a task. The task id is
+        returned by the CeleryTest endpoint.
         ---
         responses:
             200:
                 description: The number of patients in the database
+            500:
+                description: Something went wrong
+
+        tags: [Test]
         """
-        # id_ = "b06a84c8-114b-42f1-95a0-a209eb431163"
         result = AsyncResult(id_)
 
         if result.ready():
@@ -132,4 +147,4 @@ class CeleryStatus(OHDSIResource):
             "state": result.state,
             "value": res,
             "info": str(result.info),
-        }
+        }, HTTPStatus.OK

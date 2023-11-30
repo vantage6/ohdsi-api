@@ -53,7 +53,8 @@
         },
         "/count": {
             "get": {
-                "summary": "Count the number of persons in the database.",
+                "summary": "Count the number of records in the person table.",
+                "description": "<br/>This endpoint counts the number of records in the person table. It used a<br/>direct SQL query to the database (So not using the celery workers).<br/>",
                 "responses": {
                     "200": {
                         "description": "The number of patients in the database"
@@ -69,10 +70,14 @@
         },
         "/error": {
             "get": {
-                "summary": "Produce an error on the query, and return something useful to the user.",
+                "summary": "Produce an error on the query.",
+                "description": "<br/>This endpoint is used to test the error handling of the API.<br/>",
                 "responses": {
+                    "500": {
+                        "description": "As expected the query failed"
+                    },
                     "200": {
-                        "description": "The number of patients in the database"
+                        "description": "If you get this the test failed.. by succeeding"
                     }
                 },
                 "tags": [
@@ -82,22 +87,36 @@
         },
         "/result/{id_}": {
             "get": {
-                "summary": "Test Celery.",
+                "summary": "Retrieve the status and/or result of a task.",
+                "description": "<br/>This endpoint retrieves the status and/or result of a task. The task id is<br/>returned by the CeleryTest endpoint.<br/>",
                 "responses": {
                     "200": {
                         "description": "The number of patients in the database"
+                    },
+                    "500": {
+                        "description": "Something went wrong"
                     }
-                }
+                },
+                "tags": [
+                    "Test"
+                ]
             }
         },
         "/celery": {
             "get": {
-                "summary": "Test Celery.",
+                "summary": "Create a count task.",
+                "description": "<br/>This endpoint creates a count task and returns the task id. This endpoint<br/>uses the celery workers. The result can be retrieved with the CeleryStatus<br/>endpoint.<br/>",
                 "responses": {
                     "200": {
                         "description": "Task started"
+                    },
+                    "503": {
+                        "description": "Celery is not available, check the health endpoint"
                     }
-                }
+                },
+                "tags": [
+                    "Test"
+                ]
             }
         }
     },

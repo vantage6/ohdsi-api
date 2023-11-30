@@ -17,6 +17,7 @@ OHDSI API
    :caption: Development
 
    development/documentation
+   development/release
    development/release_notes
 
 

@@ -3,7 +3,6 @@ Documentation
 
 Local build
 -----------
-
 To build the documentation locally, you need to install the following packages:
 
 .. code-block:: bash
