@@ -79,6 +79,7 @@ OMOP data source:
     CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672/
     CELERY_RESULT_BACKEND=db+postgresql://postgres:Celery@Postgr3s!@db/celery
 
+    OMOP_DBMS=postgresql
     OMOP_HOST=omop-data-source
     OMOP_PORT=5432
     OMOP_USER=ohdsi
