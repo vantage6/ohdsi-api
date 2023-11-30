@@ -18,11 +18,10 @@ jobs:
     - name: Set version
       run: make set-version VERSION=$VERSION
 
-    - name: Run make build
+    - name: Run make image
       run: |
-        make build
-        make build TAG=$VERSION
-
+        make image
+        make image TAG=$VERSION
 
     - name: Run make push
       run: |
