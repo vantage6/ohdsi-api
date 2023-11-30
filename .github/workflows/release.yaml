@@ -1,8 +1,9 @@
 name: CI
 
 on:
-    tags:
-        - version/*
+    push:
+        tags:
+            - 'version/*'
 
 jobs:
   build:
@@ -18,7 +19,12 @@ jobs:
       run: make set-version VERSION=$VERSION
 
     - name: Run make build
-      run: make build
+      run: |
+        make build
+        make build TAG=$VERSION
+
 
     - name: Run make push
-      run: make push
+      run: |
+        make push
+        make push TAG=$VERSION
