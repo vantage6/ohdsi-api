@@ -5,6 +5,15 @@
 
 OHDSI API
 =========
+This API designed to retrieve data from an OMOP data source through an HTTP connection. It can also be used to
+execute OHDSI community tools such as
+`CohortDiagnostics <https://ohdsi.github.io/CohortDiagnostics/>`_ and retrieve their
+results.
+
+This project has been created for the `IDEA4RC project <https://www.idea4rc.eu/>`_. It
+allows to connects the `vantage6 <https://vantage6.ai>`_ platform to an OMOP data
+source. It uses `python-ohdsi <https://python-ohdsi.readthedocs.org>`_, a package also
+to created in this project context to interface with the OMOP data source.
 
 .. toctree::
     :maxdepth: 2
