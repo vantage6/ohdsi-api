@@ -2,6 +2,7 @@ from http import HTTPStatus
 from logging import getLogger
 
 from . import OHDSIResource
+from ..task.pong import ping
 
 log = getLogger(__name__)
 
@@ -41,6 +42,15 @@ class Health(OHDSIResource):
             log.error(e)
             celery_status = "Celery is not available"
 
+        # Check Celery Backend
+        celery_backend_status = "ok"
+        try:
+            ping_result = ping.delay()
+            ping_result.get(timeout=3)
+        except Exception as e:
+            log.error(e)
+            celery_backend_status = "Celery backend is not available"
+
         all_online = all([database_status == "ok", celery_status == "ok"])
         status_code = HTTPStatus.OK if all_online else HTTPStatus.SERVICE_UNAVAILABLE
 
@@ -48,4 +58,5 @@ class Health(OHDSIResource):
             "API": "ok",
             "database": database_status,
             "celery": celery_status,
+            "celery_backend": celery_backend_status,
         }, status_code
