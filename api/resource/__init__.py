@@ -27,12 +27,11 @@ class OHDSIResource(ServiceResource):
 
         log.info(
             "Connection details:"
-            f"dbms: {self.dbms}"
-            f"server: {self.server}"
-            f"database: {self.database}"
-            f"user: {self.user}"
-            f"password: {self.password}"
-            f"port: {self.port}"
+            f"dbms: {self.dbms}, "
+            f"server: {self.server}, "
+            f"database: {self.database}, "
+            f"user: {self.user}, "
+            f"port: {self.port} "
         )
 
         self.connection_details = create_connection_details(

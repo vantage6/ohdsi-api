@@ -25,7 +25,7 @@ class Health(OHDSIResource):
         tags: [Monitor]
         """
 
-        # Check database connection
+        # Check OHDSI database connection
         database_status = "ok"
         try:
             self.connect()
