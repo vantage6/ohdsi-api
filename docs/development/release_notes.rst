@@ -1,6 +1,14 @@
 Release notes
 =============
 
+0.0.4
+-----
+*5 December 2023*
+
+- The endpoints ``/celery`` and ``/count`` now have settable schema's. These should be
+  defined in the environment variable ``OMOP_CDM_SCHEMA``. There is no default, so
+  make sure to specify this in the environment file.
+
 0.0.3
 -----
 *30 November 2023*
