@@ -66,8 +66,8 @@ OMOP data source:
 .. code-block:: sh
     :caption: .connection-details.env
 
-    CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672/
-    CELERY_RESULT_BACKEND=db+postgresql://postgres:Celery@Postgr3s!@db/celery
+    CELERY_BROKER_URL=amqp://[USERNAME]:[USERNAME]@rabbitmq:5672/
+    CELERY_RESULT_BACKEND=db+postgresql://[USERNAME]:[PASSWORD]@[HOST]/[DATABASE]
 
     OMOP_DBMS=postgresql
     OMOP_HOST=omop-data-source
@@ -75,6 +75,7 @@ OMOP data source:
     OMOP_USER=ohdsi
     OMOP_PASSWORD=ohdsi
     OMOP_DB=ohdsi
+    OMOP_CDM_SCHEMA=cdm
 
 Finally, start the API by running:
 
