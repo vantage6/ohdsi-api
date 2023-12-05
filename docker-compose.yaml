@@ -22,12 +22,10 @@ services:
   db:
     image: postgres:9.6
     ports:
-      - 5432:5432
+      - 5454:5432
     container_name: postgres
-    environment:
-      - POSTGRES_USER=ohdsi
-      - POSTGRES_PASSWORD=ohdsi
-      - POSTGRES_DB=ohdsi
+    env_file:
+      - .connection-details.env
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
 
