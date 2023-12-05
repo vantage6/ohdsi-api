@@ -24,6 +24,7 @@ class OHDSITask(Task):
         self.user = os.environ.get("OMOP_USER")
         self.password = os.environ.get("OMOP_PASSWORD")
         self.port = os.environ.get("OMOP_PORT")
+        self.schema = os.environ.get("OMOP_CDM_SCHEMA")
 
         self.log_stream = io.StringIO()
         self.connection = None

@@ -12,7 +12,10 @@ log = logging.getLogger(__name__)
 @shared_task(bind=True, ignore_result=False, time_limit=60, base=OHDSITask)
 def count(self):
     print("Going to count the number of persons in the database")
-    count = query_sql(self.connection, "SELECT COUNT(*) FROM omopcdm_synthetic.person")
+    if not self.schema:
+        return {"error": "No schema is set"}
+
+    count = query_sql(self.connection, f"SELECT COUNT(*) FROM {self.schema}.person")
     print("Counted the number of persons in the database")
 
     count = RS4Extended.from_RS4(count)

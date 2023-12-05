@@ -24,6 +24,7 @@ class OHDSIResource(ServiceResource):
         self.user = os.environ.get("OMOP_USER")
         self.password = os.environ.get("OMOP_PASSWORD")
         self.port = os.environ.get("OMOP_PORT")
+        self.schema = os.environ.get("OMOP_CDM_SCHEMA")
 
         log.info(
             "Connection details:"
@@ -31,7 +32,8 @@ class OHDSIResource(ServiceResource):
             f"server: {self.server}, "
             f"database: {self.database}, "
             f"user: {self.user}, "
-            f"port: {self.port} "
+            f"port: {self.port}, "
+            f"schema: {self.schema}"
         )
 
         self.connection_details = create_connection_details(

@@ -1,6 +1,3 @@
-# TODO read the schema from the environment variable
-# TODO Test connection with a query in celery
-# TODO Test connection with a query that fails
 from http import HTTPStatus
 from logging import getLogger
 from celery.result import AsyncResult
@@ -32,10 +29,12 @@ class CountTest(OHDSIResource):
         """
         connection = self.connect()
         log.info("Going to count the number of persons in the database")
+
+        if not self.schema:
+            return {"error": "No schema is set"}, HTTPStatus.INTERNAL_SERVER_ERROR
+
         try:
-            count = query_sql(
-                connection, "SELECT COUNT(*) FROM omopcdm_synthetic.person"
-            )
+            count = query_sql(connection, f"SELECT COUNT(*) FROM {self.schema}.person")
         except Exception as e:
             log.exception(e)
             # read /app/errorReportSql.txt and return it
@@ -137,10 +136,8 @@ class CeleryStatus(OHDSIResource):
 
         if not isinstance(res, str | dict):
             res = str(res)
-            print("not a sting")
-            print(res)
         else:
-            print("is a string")
+            print("IDK what this is, lets just try to return it")
 
         return {
             "id": id_,
