@@ -1,5 +1,6 @@
 import os
 import logging
+import sys
 
 from flask import Flask
 from flask_restful import Api
@@ -12,8 +13,12 @@ from .resource.version import Version
 from .resource.health import Health
 from .resource.status import Status
 from .resource.test import CountTest, ErrorTest, CeleryTest, CeleryStatus
+from .resource.cohort import AllPatientsCohorts, AllPatientsCohort
+from .resource.query import QueryStandardFeatures, QueryStandardFeature
 
-logging.basicConfig(level=logging.DEBUG)
+handler = logging.StreamHandler(sys.stdout)
+logging.basicConfig(level=logging.DEBUG, handlers=[handler])
+# logger.addHandler(handler)
 
 broker_url = os.environ.get("CELERY_BROKER_URL", "amqp://guest:guest@127.0.0.1:5672")
 backend_url = os.environ.get("CELERY_RESULT_BACKEND", "db+sqlite:///results.sqlite")
@@ -46,6 +51,42 @@ celery_app.set_default()
 api.add_resource(
     Version,
     "/version",
+    resource_class_kwargs={
+        "api": api,
+        "celery": celery_app,
+    },
+)
+
+api.add_resource(
+    AllPatientsCohorts,
+    "/all-patients-cohort",
+    resource_class_kwargs={
+        "api": api,
+        "celery": celery_app,
+    },
+)
+
+api.add_resource(
+    AllPatientsCohort,
+    "/all-patients-cohort/<string:id_>",
+    resource_class_kwargs={
+        "api": api,
+        "celery": celery_app,
+    },
+)
+
+api.add_resource(
+    QueryStandardFeatures,
+    "/query-standard-features",
+    resource_class_kwargs={
+        "api": api,
+        "celery": celery_app,
+    },
+)
+
+api.add_resource(
+    QueryStandardFeature,
+    "/query-standard-feature/<string:id_>",
     resource_class_kwargs={
         "api": api,
         "celery": celery_app,

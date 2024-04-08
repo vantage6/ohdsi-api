@@ -76,6 +76,7 @@ OMOP data source:
     OMOP_PASSWORD=ohdsi
     OMOP_DB=ohdsi
     OMOP_CDM_SCHEMA=cdm
+    OMOP_RESULTS_SCHEMA=results
 
 Finally, start the API by running:
 

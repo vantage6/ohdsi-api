@@ -1,6 +1,15 @@
 Release notes
 =============
 
+0.0.5
+-----
+
+- Added the  ``OMOP_RESULT_SCHEMA`` environment variable to the ``OHDSITask`` class.
+  This can be used to specify the schema where for example the cohorts are stored.
+- Added the ``/cohorts`` endpoint to return the create an *allPatients* cohort which
+  can be used to retrieve data from all patients. In this case users are not able
+  to supply their own OHDSI cohort definitions.
+
 0.0.4
 -----
 *5 December 2023*
