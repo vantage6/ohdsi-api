@@ -14,12 +14,6 @@ log = getLogger(__name__)
 
 class QueryStandardFeatures(OHDSIResource):
 
-    # def get(self):
-    #     """
-    #     Check that the all patients cohort exists
-    #     """
-    #     pass
-
     def post(self):
         """
         Create a task that
@@ -39,7 +33,10 @@ class QueryStandardFeatures(OHDSIResource):
             result = query_standard_features.delay()
         except Exception as e:
             log.exception(e)
-            return {"error": "Something went wrong"}, HTTPStatus.INTERNAL_SERVER_ERROR
+            return {
+                "error": "Something went wrong when creating the task",
+                "e": str(e),
+            }, HTTPStatus.INTERNAL_SERVER_ERROR
 
         return {"id": result.id}, HTTPStatus.OK
 
@@ -71,7 +68,7 @@ class QueryStandardFeature(OHDSIResource):
         if result.ready():
             if isinstance(result.result, pd.DataFrame):
                 res: pd.DataFrame = result.result
-                res = res.to_json()
+                res = res.to_json(orient="split")
                 log.info(f"Panda Dataframe converted to JSON")
             else:
                 log.warning(f"Result is not a panda dataframe")
