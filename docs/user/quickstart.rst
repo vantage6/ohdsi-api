@@ -21,8 +21,6 @@ contents into a file called ``docker-compose.yml``:
             image: harbor2.vantage6.ai/infrastructure/ohdsi-api:latest
             ports:
             - 5000:8000
-            volumes:
-            - .:/app
             container_name: ohdsi-api
             env_file:
             - .connection-details.env
@@ -42,10 +40,8 @@ contents into a file called ``docker-compose.yml``:
             ports:
             - 5454:5432
             container_name: postgres
-            environment:
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=Celery@Postgr3s!
-            - POSTGRES_DB=celery
+            env_file:
+            - .connection-details.env
             volumes:
             - ./data/postgres:/var/lib/postgresql/data
 
@@ -55,8 +51,6 @@ contents into a file called ``docker-compose.yml``:
             command: celery -A api.celery_app worker -l DEBUG -P solo
             env_file:
             - .connection-details.env
-            volumes:
-            - .:/app
             depends_on:
             - rabbitmq
 
@@ -66,17 +60,21 @@ OMOP data source:
 .. code-block:: sh
     :caption: .connection-details.env
 
-    CELERY_BROKER_URL=amqp://[USERNAME]:[USERNAME]@rabbitmq:5672/
-    CELERY_RESULT_BACKEND=db+postgresql://[USERNAME]:[PASSWORD]@[HOST]/[DATABASE]
+    POSTGRES_USER=postgres
+    POSTGRES_PASSWORD=Celery@Postgr3s!
+    POSTGRES_DB=celery
+
+    CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672/
+    CELERY_RESULT_BACKEND=db+postgresql://postgres:Celery@Postgr3s!@db/[DATABASE]
 
     OMOP_DBMS=postgresql
-    OMOP_HOST=omop-data-source
+    OMOP_SERVER=omop-data-source
     OMOP_PORT=5432
     OMOP_USER=ohdsi
     OMOP_PASSWORD=ohdsi
-    OMOP_DB=ohdsi
+    OMOP_DATABASE=ohdsi
     OMOP_CDM_SCHEMA=cdm
-    OMOP_RESULTS_SCHEMA=results
+    OMOP_RESULT_SCHEMA=results
 
 Finally, start the API by running:
 

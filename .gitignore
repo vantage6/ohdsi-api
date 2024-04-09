@@ -4,3 +4,4 @@
 data/
 docs/_build
 *.env
+errorReportSql.txt
