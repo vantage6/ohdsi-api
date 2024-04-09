@@ -3,4 +3,4 @@
 .vscode/
 data/
 docs/_build
-
+*.env

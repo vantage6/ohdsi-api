@@ -1,11 +1,11 @@
 IMAGE = "harbor2.vantage6.ai/infrastructure/ohdsi-api"
-TAG = "latest"
+TAG = "dev"
 IMAGE_OPTS = "--progress=plain"
 
 
 help:
 	@echo "set-version   - set the version of all packages, needs VERSION"
-	@echo "image         - build the docker image"
+	@echo "image         - build the docker IMAGE:TAG"
 	@echo "push          - push the docker image to the registry"
 
 set-version:
