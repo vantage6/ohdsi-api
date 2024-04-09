@@ -2,10 +2,11 @@ services:
 
   # OHDSI API
   ohdsi-api:
-    image: harbor2.vantage6.ai/infrastructure/ohdsi-api:latest
+    image: harbor2.vantage6.ai/infrastructure/ohdsi-api:dev
     ports:
       - 5000:8000
     container_name: ohdsi-api
+    restart: unless-stopped
     env_file:
       - .connection-details.env
     command: ["gunicorn", "-b", "0.0.0.0", "-w", "1", "api:app"]
@@ -30,9 +31,10 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
 
   celery-worker:
-    image: harbor2.vantage6.ai/infrastructure/ohdsi-api:latest
+    image: harbor2.vantage6.ai/infrastructure/ohdsi-api:dev
     container_name: celery-worker
     command: celery -A api.celery_app worker -l DEBUG -P solo
+    restart: unless-stopped
     env_file:
       - .connection-details.env
     depends_on:
