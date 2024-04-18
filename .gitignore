@@ -1,7 +1,7 @@
 
 **/__pycache__/
 .vscode/
-data/
+/data/
 docs/_build
 *.env
 errorReportSql.txt
