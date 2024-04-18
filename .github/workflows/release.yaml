@@ -27,7 +27,7 @@ jobs:
 
       - name: Run make image
         run: |
-          make image
+          make image TAG=latest
           make image TAG=$VERSION
 
       - name: Run make push
