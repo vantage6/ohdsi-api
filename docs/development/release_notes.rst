@@ -6,9 +6,14 @@ Release notes
 
 - Added the  ``OMOP_RESULT_SCHEMA`` environment variable to the ``OHDSITask`` class.
   This can be used to specify the schema where for example the cohorts are stored.
-- Added the ``/cohorts`` endpoint to return the create an *allPatients* cohort which
-  can be used to retrieve data from all patients. In this case users are not able
-  to supply their own OHDSI cohort definitions.
+- Added the ``/all-patients-cohorts`` and ``/all-patients-cohorts/<cohort_id>``
+  endpoints to manage the *allPatients* cohort which can be used to retrieve data from
+  all patients. In this case users are not able to supply their own OHDSI cohort
+  definitions.
+- Added the ``/query-standard-features`` and ``/query-standard-feature/<string:id_>``
+  endpoints to query the standard features that are available in the OMOP CDM. Note
+  that this endpoint returns a single record per patient by selecting the first
+  observation.
 
 0.0.4
 -----
