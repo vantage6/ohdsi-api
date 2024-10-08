@@ -11,3 +11,4 @@ ohdsi-feature-extraction
 ohdsi-common
 flasgger==0.9.7.1
 black
+numpy==1.26.4

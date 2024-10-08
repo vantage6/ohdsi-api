@@ -176,7 +176,7 @@ WHERE (condition_concept_id IN (@incl_condition_concept_id) OR (@incl_condition_
 AND (procedure_concept_id IN (@incl_procedure_concept_id) OR (@incl_procedure_concept_id) IS NULL)
 AND (measurement_concept_id IN (@incl_measurement_concept_id) OR (@incl_measurement_concept_id) IS NULL)
 AND (drug_concept_id IN (@incl_drug_concept_id) OR (@incl_drug_concept_id) IS NULL)
-AND (subject_id IN (@subject_ids) OR (@subject_ids) IS NULL)
+AND (p.subject_id IN (@subject_ids) OR (@subject_ids) IS NULL)
 
 ORDER BY p.subject_id ASC -- LIMIT 100
 
