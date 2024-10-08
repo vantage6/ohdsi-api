@@ -1,6 +1,18 @@
 Release notes
 =============
 
+0.0.6
+-----
+*8 Oktober 2024*
+
+- Updated the ``standard_features.sql`` to compute the ``surv`` variable. This is the
+  survival time in days from the first observation to the end of the observation period
+  or the death date. In case a death date is registered the censoring status is set to
+  1, otherwise 0.
+- Fixed the ``cohort_id`` filter in the ``standard_features.sql`` query. This was
+  previously not working correctly.
+
+
 0.0.5
 -----
 
