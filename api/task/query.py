@@ -20,6 +20,7 @@ log = logging.getLogger(__name__)
 @shared_task(bind=True, ignore_result=False, time_limit=60, base=OHDSITask)
 def query_standard_features(
     self,
+    subject_ids: list[int] = None,
     condition_concept_ids: list[int] = None,
     procedure_concept_ids: list[int] = None,
     measurement_concept_ids: list[int] = None,
@@ -55,6 +56,7 @@ def query_standard_features(
         incl_procedure_concept_id=procedure_concept_ids,  # 4066543
         incl_measurement_concept_id=measurement_concept_ids,
         incl_drug_concept_id=drug_concept_ids,  #'ALL' ? @TODO in algo
+        subject_ids=subject_ids,
     )
 
     log.debug("Translating SQL to target dialect")

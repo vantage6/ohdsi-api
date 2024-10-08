@@ -3,6 +3,8 @@ import pandas as pd
 from http import HTTPStatus
 from logging import getLogger
 
+from flask import request
+
 from celery.result import AsyncResult
 
 from . import OHDSIResource
@@ -21,16 +23,36 @@ class QueryStandardFeatures(OHDSIResource):
         Triggering this endpoint will create a task to retrieve the standard features
         of the OMOP database.
         ---
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subject_ids:
+                    type: array
+                    items:
+                      type: integer
+                    description: The subject IDs to retrieve the data for
+                    example: [1, 2, 3]
+
         responses:
           200:
-            description: The task was succesfully initiated
+            description: The task was successfully initiated
           500:
             description: Something went wrong
 
         tags: [Cohort]
         """
+
+        log.info("Creating task to query standard features")
+
+        data = request.get_json()
+        subject_ids = data.get("subject_ids", None)
+        log.debug(f"Subject IDs: {subject_ids}")
+
         try:
-            result = query_standard_features.delay()
+            result = query_standard_features.delay(subject_ids=subject_ids)
         except Exception as e:
             log.exception(e)
             return {
