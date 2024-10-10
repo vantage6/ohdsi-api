@@ -1,6 +1,19 @@
 Release notes
 =============
 
+0.0.7
+-----
+*10 Oktober 2024*
+
+**Features**
+- The ``/query-standard-features`` now supports specifying the ``subject_id``s for which
+  the standard features should be queried. This can be done by supplying a list of ids
+  in the request body: ``{"subject_ids": [1, 2, 3]}``.
+
+**Bugfixes**
+- Downgraded ``numpy`` to version 1.26.4 as the latest version was causing issues with
+  the ``pandas`` library.
+
 0.0.6
 -----
 *8 Oktober 2024*
