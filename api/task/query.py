@@ -47,6 +47,8 @@ def query_standard_features(
         ["NULL"] if measurement_concept_ids is None else measurement_concept_ids
     )
     drug_concept_ids = ["NULL"] if drug_concept_ids is None else drug_concept_ids
+
+    subject_ids = ["NULL"] if subject_ids is None else subject_ids
     sql = render(
         sql,
         cohort_table=f"{self.request.result_schema}.allpatients",
