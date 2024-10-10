@@ -1,9 +1,16 @@
 Release notes
 =============
 
+0.0.8
+*10 Oktober 2024*
+
+**Bugfixes**
+- Fixed a bug which prevented to request all subjects. You can now get all subjects by
+  sending an empty list in the request body: ``{"subject_ids": None}``.
+
 0.0.7
 -----
-*10 Oktober 2024*
+*9 Oktober 2024*
 
 **Features**
 - The ``/query-standard-features`` now supports specifying the ``subject_id``s for which
