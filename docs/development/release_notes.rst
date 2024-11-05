@@ -2,6 +2,7 @@ Release notes
 =============
 
 0.0.8
+-----
 *10 Oktober 2024*
 
 **Bugfixes**
